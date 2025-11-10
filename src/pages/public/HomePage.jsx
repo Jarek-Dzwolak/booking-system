@@ -1,5 +1,6 @@
 import Navbar from "../../components/shared/Navbar";
 import Hero from "../../components/public/Hero";
+import Services from "../../components/public/Services";
 
 const HomePage = () => {
   return (
@@ -7,8 +8,8 @@ const HomePage = () => {
       <Navbar />
       <div id="home">
         <Hero />
+        <Services />
       </div>
-      {/* Tutaj sekcje */}
     </div>
   );
 };

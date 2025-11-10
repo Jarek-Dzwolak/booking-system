@@ -28,7 +28,7 @@ const Navbar = () => {
     >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          {/* Logo/Nazwa */}
+          {/* Logo/Nazwa - zawsze widoczne */}
           <div className="flex items-center">
             <img
               src="/images/logo.png"
@@ -37,30 +37,38 @@ const Navbar = () => {
               onError={(e) => (e.target.style.display = "none")}
             />
             <span
-              className="font-bold text-lg hidden sm:block"
+              className="font-bold text-lg"
               style={{ color: colors.primary }}
             >
               {business.name}
             </span>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8">
+          {/* Desktop Menu - linki obok siebie */}
+          <div className="hidden md:flex items-center space-x-8">
             {menuItems.map((item) => (
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
                 className="text-gray-700 hover:text-gray-900 font-medium transition-colors"
+                style={{
+                  color: colors.text || "#374151",
+                }}
+                onMouseEnter={(e) => (e.target.style.color = colors.primary)}
+                onMouseLeave={(e) =>
+                  (e.target.style.color = colors.text || "#374151")
+                }
               >
                 {item.label}
               </button>
             ))}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile/Tablet Hamburger - tylko ikona hamburgera */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            aria-label="Toggle menu"
           >
             <svg
               className="w-6 h-6"
@@ -70,6 +78,7 @@ const Navbar = () => {
               strokeWidth="2"
               viewBox="0 0 24 24"
               stroke="currentColor"
+              style={{ color: colors.primary }}
             >
               {isOpen ? (
                 <path d="M6 18L18 6M6 6l12 12" />
@@ -80,14 +89,26 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile/Tablet Menu - odnośniki jeden pod drugim */}
         {isOpen && (
-          <div className="md:hidden py-4 border-t">
+          <div className="md:hidden py-2 border-t border-gray-200">
             {menuItems.map((item) => (
               <button
                 key={item.href}
                 onClick={() => scrollToSection(item.href)}
-                className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-50 font-medium"
+                className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-50 font-medium transition-colors"
+                style={{
+                  color: colors.text || "#374151",
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor =
+                    colors.secondary || "#f3f4f6";
+                  e.target.style.color = colors.primary;
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = "transparent";
+                  e.target.style.color = colors.text || "#374151";
+                }}
               >
                 {item.label}
               </button>
