@@ -1,13 +1,14 @@
-import { useEffect } from 'react';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Services from './components/Services';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
-import VisualEffects from './components/VisualEffects';
-import useSalonConfig from './hooks/useSalonConfig';
-import './styles/animations.css';
+import { useEffect } from "react";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import About from "./components/About";
+import Services from "./components/Services";
+import Gallery from "./components/Gallery";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import VisualEffects from "./components/VisualEffects";
+import useSalonConfig from "./hooks/useSalonConfig";
+import "./styles/animations.css";
 
 const PublicLayout = () => {
   const { applyColors, seo } = useSalonConfig();
@@ -22,34 +23,37 @@ const PublicLayout = () => {
     // Ustaw meta tagi
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
-      metaDescription.setAttribute('content', seo.description);
+      metaDescription.setAttribute("content", seo.description);
     } else {
-      const meta = document.createElement('meta');
-      meta.name = 'description';
+      const meta = document.createElement("meta");
+      meta.name = "description";
       meta.content = seo.description;
       document.head.appendChild(meta);
     }
 
     const metaKeywords = document.querySelector('meta[name="keywords"]');
     if (metaKeywords) {
-      metaKeywords.setAttribute('content', seo.keywords);
+      metaKeywords.setAttribute("content", seo.keywords);
     } else {
-      const meta = document.createElement('meta');
-      meta.name = 'keywords';
+      const meta = document.createElement("meta");
+      meta.name = "keywords";
       meta.content = seo.keywords;
       document.head.appendChild(meta);
     }
   }, [applyColors, seo]);
 
   return (
-    <div style={{ 
-      fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-      overflowX: 'hidden',
-    }}>
+    <div
+      style={{
+        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        overflowX: "hidden",
+      }}
+    >
       <Navbar />
       <Hero />
       <About />
       <Services />
+      <Gallery />
       <Contact />
       <Footer />
       <VisualEffects />

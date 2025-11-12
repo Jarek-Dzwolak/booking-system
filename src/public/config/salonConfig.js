@@ -60,6 +60,7 @@ export const salonConfig = {
     { name: "Start", href: "#home" },
     { name: "O nas", href: "#o-nas" },
     { name: "Usługi", href: "#uslugi" },
+    { name: "Galeria", href: "#galeria" },
     { name: "Kontakt", href: "#kontakt" },
   ],
 
@@ -122,6 +123,117 @@ export const salonConfig = {
       category: "eyes",
     },
   ],
+
+  // ============================================
+  // GALERIA - WERSJA ZOPTYMALIZOWANA
+  // ============================================
+  gallery: {
+    // Podstawowe ustawienia
+    title: "Nasza Galeria",
+    subtitle:
+      "Zobacz efekty naszej pracy i przekonaj się o jakości naszych usług",
+
+    // ============================================
+    // ZDJĘCIA W GALERII
+    // ============================================
+    // INSTRUKCJA: Jak dodać własne zdjęcia?
+    //
+    // OPCJA 1 - Lokalne zdjęcia (w folderze projektu):
+    // 1. Stwórz folder /public/images/gallery/ w swoim projekcie
+    // 2. Dodaj tam swoje zdjęcia (np. image-1.jpg, image-2.jpg)
+    // 3. Zamień ścieżki poniżej na: "/images/gallery/twoje-zdjecie.jpg"
+    //
+    // OPCJA 2 - Zdjęcia online (zewnętrzne linki):
+    // 1. Wgraj zdjęcia na hosting (np. Imgur, Cloudinary, własny serwer)
+    // 2. Skopiuj pełny URL do zdjęcia
+    // 3. Wklej URL w pole "src" poniżej
+    //
+    // OPCJA 3 - Placeholder images (dla testów):
+    // - Użyj serwisów jak: unsplash.com, pexels.com, pixabay.com
+    // - Lub zostaw obecne linki do placeholderów
+    //
+    // Format każdego zdjęcia:
+    // {
+    //   id: unikalny_numer,
+    //   src: "ścieżka/do/zdjęcia.jpg",
+    //   alt: "Opis zdjęcia dla SEO",
+    //   title: "Tytuł wyświetlany na hover i w lightbox",
+    //   description: "Opcjonalny opis (można pominąć)"
+    // }
+    //
+    // UWAGA: Galeria została zoptymalizowana dla 6-9 zdjęć
+    // - Na desktopie: 3 kolumny
+    // - Na tablecie: 2 kolumny
+    // - Na mobile: 1 kolumna
+    // Możesz dodać więcej lub mniej zdjęć - galeria dostosuje się automatycznie!
+    //
+    images: [
+      {
+        id: 1,
+        src: "https://images.unsplash.com/photo-1604654894610-df63bc536371?w=800",
+        alt: "Stylizacja paznokci - french manicure z delikatnym zdobnictwem",
+        title: "French Manicure Deluxe",
+        description: "Klasyczny french z eleganckim zdobnictwem",
+      },
+      {
+        id: 2,
+        src: "https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=800",
+        alt: "Makijaż ślubny - naturalny i trwały look",
+        title: "Makijaż Ślubny",
+        description: "Delikatny i długotrwały makijaż na wielką uroczystość",
+      },
+      {
+        id: 3,
+        src: "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800",
+        alt: "Profesjonalny zabieg pielęgnacyjny twarzy",
+        title: "Pielęgnacja Twarzy",
+        description:
+          "Zabieg oczyszczający i nawilżający dla każdego typu skóry",
+      },
+      {
+        id: 4,
+        src: "https://images.unsplash.com/photo-1583001931096-959e1d1a0cdc?w=800",
+        alt: "Przedłużanie rzęs metodą 1:1",
+        title: "Przedłużanie Rzęs",
+        description: "Naturalnie długie i gęste rzęsy",
+      },
+      {
+        id: 5,
+        src: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800",
+        alt: "Relaksujący masaż spa z aromaterapią",
+        title: "Masaż Relaksacyjny",
+        description: "Chwila odprężenia i całkowitego relaksu",
+      },
+      {
+        id: 6,
+        src: "https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=800",
+        alt: "Wieczorowy makijaż z efektem smokey eyes",
+        title: "Evening Glam",
+        description: "Efektowny makijaż wieczorowy na specjalne okazje",
+      },
+      {
+        id: 7,
+        src: "https://images.unsplash.com/photo-1610992015732-2449b76344bc?w=800",
+        alt: "Hybrydowy manicure w kolorze nude",
+        title: "Nude Elegance",
+        description: "Subtelny i elegancki manicure na co dzień",
+      },
+      {
+        id: 8,
+        src: "https://images.unsplash.com/photo-1588614959060-4481796d3e14?w=800",
+        alt: "Laminacja rzęs - podkręcone i wzmocnione",
+        title: "Laminacja Rzęs",
+        description: "Naturalnie podkręcone rzęsy bez potrzeby tuszu",
+      },
+      {
+        id: 9,
+        src: "https://images.unsplash.com/photo-1560750588-73207b1ef5b8?w=800",
+        alt: "Masaż liftingujący twarzy",
+        title: "Masaż Liftingujący",
+        description: "Poprawia napięcie skóry i redukuje zmarszczki",
+      },
+    ],
+  },
 
   // ============================================
   // DANE KONTAKTOWE
@@ -196,16 +308,6 @@ export const salonConfig = {
     // Obrazy hero (opcjonalnie - obecnie używamy gradientu)
     heroBackground: null,
 
-    // Galeria usług (opcjonalnie)
-    serviceImages: {
-      manicure: null,
-      makeup: null,
-      facial: null,
-      spa: null,
-      depilation: null,
-      eyes: null,
-    },
-
     // Obrazy sekcji o nas
     aboutImages: [],
   },
@@ -215,7 +317,7 @@ export const salonConfig = {
   // ============================================
   effects: {
     // Czy włączyć efekt cursor trail
-    cursorTrail: true,
+    cursorTrail: false,
 
     // Czy włączyć floating particles
     floatingParticles: true,
@@ -236,7 +338,7 @@ export const salonConfig = {
     description:
       "Odkryj najlepszy salon piękności w Warszawie. Oferujemy manicure, pedicure, makijaż, pielęgnację twarzy i wiele więcej. Umów się już dziś!",
     keywords:
-      "salon piękności, manicure, pedicure, makijaż, Warszawa, zabiegi kosmetyczne",
+      "salon piękności, manicure, pedicure, makijaż, Warszawa, zabiegi kosmetyczne, galeria prac",
   },
 };
 
