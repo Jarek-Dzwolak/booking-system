@@ -239,12 +239,17 @@ export const salonConfig = {
   // DANE KONTAKTOWE
   // ============================================
   contact: {
+    // Adres salonu
     address: {
       street: "ul. Piękna 123",
       city: "00-001 Warszawa",
       full: "ul. Piękna 123, 00-001 Warszawa",
     },
+
+    // Numer telefonu - WAŻNE: używany w kafelku "Zadzwoń"
     phone: "+48 123 456 789",
+
+    // Email
     email: "kontakt@bella.pl",
 
     // Godziny otwarcia
@@ -259,11 +264,31 @@ export const salonConfig = {
       ],
     },
 
-    // Social media (opcjonalnie)
+    // ============================================
+    // SOCIAL MEDIA - ZAKTUALIZUJ SWOJE LINKI!
+    // ============================================
+    // Te linki będą wyświetlane jako klikalne kafelki po prawej stronie
+    //
+    // INSTRUKCJA:
+    // 1. Zamień "salonbella" na nazwę swojego profilu
+    // 2. Jeśli nie masz danego social media, zostaw pusty string: ""
+    // 3. Kafelki z pustymi linkami NIE będą wyświetlane
+    //
+    // PRZYKŁADY:
+    // instagram: "https://instagram.com/twoja_nazwa"
+    // facebook: "https://facebook.com/twoja_strona"
+    // tiktok: "https://tiktok.com/@twoja_nazwa"
+    //
     social: {
-      facebook: "",
-      instagram: "",
-      tiktok: "",
+      // Instagram - wyświetla się jako różowy kafelek z emoji 📷
+      instagram: "https://instagram.com/salonbella",
+
+      // Facebook - wyświetla się jako niebieski kafelek z emoji 👍
+      facebook: "https://facebook.com/salonbella",
+
+      // TikTok - wyświetla się jako czarny kafelek z emoji 🎵
+      // Jeśli nie masz TikToka, ustaw: tiktok: ""
+      tiktok: "https://tiktok.com/@salonbella",
     },
   },
 
