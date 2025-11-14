@@ -7,23 +7,21 @@ import {
 import { AuthProvider } from "./contexts/AuthContext";
 import PublicLayout from "./public/PublicLayout";
 import DashboardLayout from "./dashboard/DashboardLayout";
+import DashboardHome from "./dashboard/DashboardHome";
+import PaymentsView from "./dashboard/PaymentsView";
 import Login from "./public/components/Login";
 import ProtectedRoute from "./public/components/ProtectedRoute";
 
 function App() {
-  const SKIP_AUTH = true; // ← Ustaw na false żeby włączyć autentykację z powrotem
+  const SKIP_AUTH = true;
 
   return (
     <Router>
       <AuthProvider>
         <Routes>
-          {/* Strona publiczna */}
           <Route path="/" element={<PublicLayout />} />
-
-          {/* Strona logowania */}
           <Route path="/login" element={<Login />} />
 
-          {/* Dashboard - chroniony */}
           <Route
             path="/dashboard"
             element={
@@ -35,9 +33,12 @@ function App() {
                 </ProtectedRoute>
               )
             }
-          />
+          >
+            <Route index element={<DashboardHome />} />
+            <Route path="payments" element={<PaymentsView />} />
+            {/* <Route path="reports" element={<ReportsView />} /> */}
+          </Route>
 
-          {/* Przekierowanie dla nieistniejących tras */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AuthProvider>
