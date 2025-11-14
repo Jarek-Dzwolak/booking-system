@@ -7,10 +7,8 @@ import {
 } from "firebase/auth";
 import { auth } from "../public/config/firebase";
 
-// Stwórz Context
 const AuthContext = createContext({});
 
-// Hook do używania AuthContext w komponentach
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -19,13 +17,11 @@ export const useAuth = () => {
   return context;
 };
 
-// Provider zarządzający stanem autoryzacji
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Funkcja logowania
   const login = async (email, password) => {
     try {
       setError(null);
@@ -38,7 +34,6 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("Login error:", error);
 
-      // Tłumaczenie błędów na polski
       let errorMessage = "Wystąpił błąd podczas logowania";
 
       switch (error.code) {
@@ -73,7 +68,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Funkcja wylogowania
   const logout = async () => {
     try {
       setError(null);
@@ -85,7 +79,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Funkcja resetowania hasła
   const resetPassword = async (email) => {
     try {
       setError(null);
@@ -112,7 +105,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Słuchaj zmian stanu autoryzacji
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
@@ -125,7 +117,6 @@ export const AuthProvider = ({ children }) => {
       }
     });
 
-    // Cleanup subscription
     return unsubscribe;
   }, []);
 

@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import useSalonConfig from "../config/salonConfig";
+import useSalonConfig from "../hooks/useSalonConfig";
 
 /**
  * Komponent chroniący trasy przed nieautoryzowanym dostępem

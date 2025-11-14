@@ -10,7 +10,7 @@ import {
   ExclamationCircleIcon,
 } from "@heroicons/react/24/outline";
 import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../../contexts/firebase-config";
+import { db } from "../public/config/firebase";
 import { useAuth } from "../../contexts/AuthContext";
 import { format, startOfMonth, startOfWeek, addDays } from "date-fns";
 import { pl } from "date-fns/locale";
@@ -28,13 +28,12 @@ const DashboardOverview = () => {
   const [todayAppointmentsList, setTodayAppointmentsList] = useState([]);
   const [upcomingAppointments, setUpcomingAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { viewingUserEmail } = useAuth();
+  const { currentUser } = useAuth();
   const { services } = useSalonConfig();
 
   useEffect(() => {
     const fetchDashboardData = async () => {
-      if (!viewingUserEmail) return;
-
+      if (!currentUser) return;
       setLoading(true);
       try {
         const today = format(new Date(), "yyyy-MM-dd");
@@ -46,7 +45,7 @@ const DashboardOverview = () => {
 
         const appointmentsQuery = query(
           collection(db, "appointments"),
-          where("ownerEmail", "==", viewingUserEmail),
+          where("ownerEmail", "==", currentUser.email),
           where("date", ">=", monthStart)
         );
 
@@ -111,7 +110,7 @@ const DashboardOverview = () => {
     };
 
     fetchDashboardData();
-  }, [viewingUserEmail]);
+  }, [currentUser]);
 
   const formatCurrency = (amount) => {
     return amount.toLocaleString("pl-PL", {

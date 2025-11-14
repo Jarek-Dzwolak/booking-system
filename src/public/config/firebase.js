@@ -55,6 +55,10 @@ try {
     "📝 Sprawdź czy poprawnie skonfigurowałeś firebaseConfig w src/config/firebase.js"
   );
 }
+import { getFirestore } from "firebase/firestore";
 
-export { auth };
+// Inicjalizuj Firestore
+const db = getFirestore(app);
+
+export { auth, db };
 export default app;

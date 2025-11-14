@@ -15,37 +15,15 @@ import {
 
 import AddAppointmentForm from "./AddAppointmentForm";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../contexts/firebase-config";
+import { db } from "../public/config/firebase";
 import { Helmet } from "react-helmet";
 
 const DashboardLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isAddFormOpen, setIsAddFormOpen] = useState(false);
-  const [authorizedUsers, setAuthorizedUsers] = useState([]);
-  const { currentUser, logout, userRole, viewingUserEmail, switchViewToUser } =
-    useAuth();
+  const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      if (currentUser && userRole === "admin") {
-        try {
-          const usersCollection = collection(db, "authorizedUsers");
-          const userSnapshot = await getDocs(usersCollection);
-          const usersList = userSnapshot.docs.map((doc) => ({
-            email: doc.id,
-            ...doc.data(),
-          }));
-          setAuthorizedUsers(usersList);
-        } catch (error) {
-          console.error("Błąd podczas pobierania użytkowników:", error);
-        }
-      }
-    };
-
-    fetchUsers();
-  }, [currentUser, userRole]);
 
   const handleLogout = async () => {
     try {
@@ -174,32 +152,6 @@ const DashboardLayout = () => {
             )}
           </nav>
 
-          {userRole === "admin" && authorizedUsers.length > 0 && (
-            <div className="p-4 border-t">
-              <h4 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Przełącz widok
-              </h4>
-              <div className="space-y-1 max-h-32 overflow-y-auto">
-                {authorizedUsers.map((user) => (
-                  <button
-                    key={user.email}
-                    onClick={() => {
-                      switchViewToUser(user.email);
-                      setSidebarOpen(false);
-                    }}
-                    className={`w-full text-left px-2 py-1.5 text-xs rounded-md transition-colors ${
-                      viewingUserEmail === user.email
-                        ? "bg-pink-50 text-pink-700 font-medium"
-                        : "text-gray-600 hover:bg-gray-100"
-                    }`}
-                  >
-                    {user.displayName || user.email}
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
           <div className="p-4 border-t">
             <div className="flex items-center">
               <div className="flex-shrink-0">
@@ -282,34 +234,6 @@ const DashboardLayout = () => {
             )}
           </nav>
 
-          {userRole === "admin" && authorizedUsers.length > 0 && (
-            <div className="px-3 py-4 border-t">
-              <h4 className="px-3 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Przełącz widok
-              </h4>
-              <div className="space-y-1 max-h-36 overflow-y-auto">
-                {authorizedUsers.map((user) => (
-                  <button
-                    key={user.email}
-                    onClick={() => switchViewToUser(user.email)}
-                    className={`w-full text-left px-3 py-2 text-xs rounded-md transition-colors ${
-                      viewingUserEmail === user.email
-                        ? "bg-pink-50 text-pink-700 font-medium"
-                        : "text-gray-600 hover:bg-gray-100"
-                    }`}
-                  >
-                    <div className="truncate">
-                      {user.displayName || user.email}
-                    </div>
-                    <div className="text-[10px] text-gray-400 mt-0.5">
-                      {user.role === "admin" ? "Admin" : "Pracownik"}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
           <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
             <div className="flex items-center w-full">
               <div className="flex-shrink-0">
@@ -360,17 +284,6 @@ const DashboardLayout = () => {
                 System Zarządzania
               </h1>
             </div>
-            {viewingUserEmail &&
-              userRole === "admin" &&
-              currentUser.email !== viewingUserEmail && (
-                <div className="hidden sm:flex items-center">
-                  <div className="px-3 py-1 bg-gradient-to-r from-pink-100 to-purple-100 text-pink-800 rounded-full text-xs sm:text-sm font-medium">
-                    Widok:{" "}
-                    {authorizedUsers.find((u) => u.email === viewingUserEmail)
-                      ?.displayName || viewingUserEmail}
-                  </div>
-                </div>
-              )}
           </div>
         </div>
 

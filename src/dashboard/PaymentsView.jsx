@@ -7,11 +7,10 @@ import {
   ClockIcon,
 } from "@heroicons/react/24/outline";
 import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
-import { db } from "../contexts/firebase-config";
+import { db } from "../public/config/firebase";
 import { useAuth } from "../contexts/AuthContext";
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
-n;
 import useSalonConfig from "../public/config/salonConfig";
 
 const PaymentsView = () => {
@@ -19,18 +18,17 @@ const PaymentsView = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
-  const { viewingUserEmail } = useAuth();
+  const { currentUser } = useAuth();
   const { services } = useSalonConfig();
 
   useEffect(() => {
     const fetchPayments = async () => {
-      if (!viewingUserEmail) return;
-
+      if (!currentUser) return;
       setLoading(true);
       try {
         const appointmentsQuery = query(
           collection(db, "appointments"),
-          where("ownerEmail", "==", viewingUserEmail),
+          where("ownerEmail", "==", currentUser.email),
           orderBy("date", "desc")
         );
 
@@ -61,7 +59,7 @@ const PaymentsView = () => {
     };
 
     fetchPayments();
-  }, [viewingUserEmail]);
+  }, [currentUser]);
 
   const getServiceLabel = (category) => {
     const service = services.find((s) => s.category === category);

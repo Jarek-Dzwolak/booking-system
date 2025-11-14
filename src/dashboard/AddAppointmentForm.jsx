@@ -11,14 +11,14 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
-import { db } from "../contexts/firebase-config";
+import { db } from "../public/config/firebase";
 import { useAuth } from "../contexts/AuthContext";
 import useSalonConfig from "../public/config/salonConfig";
 
 const AddAppointmentForm = ({ onClose, onSubmit, existingClient = null }) => {
   const today = new Date().toISOString().split("T")[0];
   const [loading, setLoading] = useState(false);
-  const { currentUser, userRole, viewingUserEmail } = useAuth();
+  const { currentUser } = useAuth();
   const { services } = useSalonConfig();
 
   const defaultServiceType = services[0]?.category || "hands";
@@ -177,10 +177,7 @@ const AddAppointmentForm = ({ onClose, onSubmit, existingClient = null }) => {
     }
 
     try {
-      const ownerToCheck =
-        userRole === "admin" && viewingUserEmail
-          ? viewingUserEmail
-          : currentUser.email;
+      const ownerToCheck = currentUser.email;
 
       const [year, month, day] = formData.date.split("-").map(Number);
       const [startHour, startMinute] = formData.startTime
@@ -243,9 +240,7 @@ const AddAppointmentForm = ({ onClose, onSubmit, existingClient = null }) => {
   };
 
   const determineOwnerEmail = () => {
-    if (userRole === "admin" && viewingUserEmail) {
-      return viewingUserEmail;
-    } else if (currentUser && currentUser.email) {
+    if (currentUser && currentUser.email) {
       return currentUser.email;
     } else {
       console.warn("Brak zalogowanego użytkownika lub jego email!");
@@ -605,24 +600,6 @@ const AddAppointmentForm = ({ onClose, onSubmit, existingClient = null }) => {
               )}
             </div>
           </div>
-
-          {userRole === "admin" && (
-            <div className="bg-gray-50 p-3 rounded-lg">
-              <h3 className="text-base font-medium text-gray-900 mb-3">
-                Właściciel wizyty
-              </h3>
-              <div className="text-sm">
-                <p>
-                  Wizyta zostanie przypisana do:{" "}
-                  <strong>{viewingUserEmail}</strong>
-                </p>
-                <p className="text-xs text-gray-500 mt-1">
-                  Aby zmienić właściciela, przełącz widok użytkownika w menu
-                  bocznym.
-                </p>
-              </div>
-            </div>
-          )}
 
           <div className="bg-gray-50 p-3 rounded-lg">
             <h3 className="text-base font-medium text-gray-900 mb-3">

@@ -29,9 +29,9 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { db } from "../contexts/firebase-config";
+import { db } from "../public/config/firebase";
 import { useAuth } from "../contexts/AuthContext";
-import { useSalonConfig } from "../public/config/useSalonConfig";
+import useSalonConfig from "../public/hooks/useSalonConfig";
 
 const DeleteConfirmationModal = ({
   appointment,
@@ -220,7 +220,7 @@ const DashboardHome = () => {
   const [appointments, setAppointments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { viewingUserEmail } = useAuth();
+  const { currentUser } = useAuth();
   const { services } = useSalonConfig();
 
   const [editingAppointment, setEditingAppointment] = useState(null);
@@ -246,7 +246,8 @@ const DashboardHome = () => {
         const appointmentsQuery = query(
           collection(db, "appointments"),
           where("date", ">=", startDateStr),
-          where("date", "<=", endDateStr)
+          where("date", "<=", endDateStr),
+          where("ownerEmail", "==", currentUser.email)
         );
 
         const querySnapshot = await getDocs(appointmentsQuery);
@@ -254,21 +255,16 @@ const DashboardHome = () => {
         const appointmentsData = [];
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-
-          if (!viewingUserEmail || data.ownerEmail === viewingUserEmail) {
-            appointmentsData.push({
-              id: doc.id,
-              ...data,
-              client:
-                data.clientName ||
-                data.clientInstagramName ||
-                "Klient bez nazwy",
-              service: data.serviceDetails,
-              type: data.serviceType,
-              startTime: data.startTime,
-              endTime: data.endTime,
-            });
-          }
+          appointmentsData.push({
+            id: doc.id,
+            ...data,
+            client:
+              data.clientName || data.clientInstagramName || "Klient bez nazwy",
+            service: data.serviceDetails,
+            type: data.serviceType,
+            startTime: data.startTime,
+            endTime: data.endTime,
+          });
         });
 
         setAppointments(appointmentsData);
@@ -281,7 +277,7 @@ const DashboardHome = () => {
     };
 
     fetchAppointmentsForWeek();
-  }, [currentDate, viewingUserEmail]);
+  }, [currentDate, currentUser]);
 
   const onDayClick = (day) => {
     setSelectedDay(day);
